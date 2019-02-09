@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+
+<head>
+
+
+
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="author" content="">
+
+    <title>Sticky Footer Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://epochjs.github.io/epoch/js/d3.js"></script>
+    <script src="https://epochjs.github.io/epoch/js/epoch.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://epochjs.github.io/epoch/css/epoch.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.8.0/xterm.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/3.8.0/xterm.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+
+
+    <!-- Custom styles for this template -->
+    <style>
+        /* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  margin-bottom: 60px; /* Margin bottom by footer height */
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Set the fixed height of the footer here */
+  line-height: 60px; /* Vertically center the text there */
+  background-color: #f5f5f5;
+}
+
+.container {
+  width: auto;
+  max-width: 680px;
+  padding: 0 15px;
+}
+</style>
+
+
+
+
+
+    <script>
+        var CryptoJS=CryptoJS||function(e,t){var n={},r=n.lib={},i=function(){},s=r.Base={extend:function(e){i.prototype=this;var t=new i;e&&t.mixIn(e);t.hasOwnProperty("init")||(t.init=function(){t.$super.init.apply(this,arguments)});t.init.prototype=t;t.$super=this;return t},create:function(){var e=this.extend();e.init.apply(e,arguments);return e},init:function(){},mixIn:function(e){for(var t in e)e.hasOwnProperty(t)&&(this[t]=e[t]);e.hasOwnProperty("toString")&&(this.toString=e.toString)},clone:function(){return this.init.prototype.extend(this)}},o=r.WordArray=s.extend({init:function(e,n){e=this.words=e||[];this.sigBytes=n!=t?n:4*e.length},toString:function(e){return(e||a).stringify(this)},concat:function(e){var t=this.words,n=e.words,r=this.sigBytes;e=e.sigBytes;this.clamp();if(r%4)for(var i=0;i<e;i++)t[r+i>>>2]|=(n[i>>>2]>>>24-8*(i%4)&255)<<24-8*((r+i)%4);else if(65535<n.length)for(i=0;i<e;i+=4)t[r+i>>>2]=n[i>>>2];else t.push.apply(t,n);this.sigBytes+=e;return this},clamp:function(){var t=this.words,n=this.sigBytes;t[n>>>2]&=4294967295<<32-8*(n%4);t.length=e.ceil(n/4)},clone:function(){var e=s.clone.call(this);e.words=this.words.slice(0);return e},random:function(t){for(var n=[],r=0;r<t;r+=4)n.push(4294967296*e.random()|0);return new o.init(n,t)}}),u=n.enc={},a=u.Hex={stringify:function(e){var t=e.words;e=e.sigBytes;for(var n=[],r=0;r<e;r++){var i=t[r>>>2]>>>24-8*(r%4)&255;n.push((i>>>4).toString(16));n.push((i&15).toString(16))}return n.join("")},parse:function(e){for(var t=e.length,n=[],r=0;r<t;r+=2)n[r>>>3]|=parseInt(e.substr(r,2),16)<<24-4*(r%8);return new o.init(n,t/2)}},f=u.Latin1={stringify:function(e){var t=e.words;e=e.sigBytes;for(var n=[],r=0;r<e;r++)n.push(String.fromCharCode(t[r>>>2]>>>24-8*(r%4)&255));return n.join("")},parse:function(e){for(var t=e.length,n=[],r=0;r<t;r++)n[r>>>2]|=(e.charCodeAt(r)&255)<<24-8*(r%4);return new o.init(n,t)}},l=u.Utf8={stringify:function(e){try{return decodeURIComponent(escape(f.stringify(e)))}catch(t){throw Error("Malformed UTF-8 data")}},parse:function(e){return f.parse(unescape(encodeURIComponent(e)))}},c=r.BufferedBlockAlgorithm=s.extend({reset:function(){this._data=new o.init;this._nDataBytes=0},_append:function(e){"string"==typeof e&&(e=l.parse(e));this._data.concat(e);this._nDataBytes+=e.sigBytes},_process:function(t){var n=this._data,r=n.words,i=n.sigBytes,s=this.blockSize,u=i/(4*s),u=t?e.ceil(u):e.max((u|0)-this._minBufferSize,0);t=u*s;i=e.min(4*t,i);if(t){for(var a=0;a<t;a+=s)this._doProcessBlock(r,a);a=r.splice(0,t);n.sigBytes-=i}return new o.init(a,i)},clone:function(){var e=s.clone.call(this);e._data=this._data.clone();return e},_minBufferSize:0});r.Hasher=c.extend({cfg:s.extend(),init:function(e){this.cfg=this.cfg.extend(e);this.reset()},reset:function(){c.reset.call(this);this._doReset()},update:function(e){this._append(e);this._process();return this},finalize:function(e){e&&this._append(e);return this._doFinalize()},blockSize:16,_createHelper:function(e){return function(t,n){return(new e.init(n)).finalize(t)}},_createHmacHelper:function(e){return function(t,n){return(new h.HMAC.init(e,n)).finalize(t)}}});var h=n.algo={};return n}(Math);(function(e){for(var t=CryptoJS,n=t.lib,r=n.WordArray,i=n.Hasher,n=t.algo,s=[],o=[],u=function(e){return 4294967296*(e-(e|0))|0},a=2,f=0;64>f;){var l;e:{l=a;for(var c=e.sqrt(l),h=2;h<=c;h++)if(!(l%h)){l=!1;break e}l=!0}l&&(8>f&&(s[f]=u(e.pow(a,.5))),o[f]=u(e.pow(a,1/3)),f++);a++}var p=[],n=n.SHA256=i.extend({_doReset:function(){this._hash=new r.init(s.slice(0))},_doProcessBlock:function(e,t){for(var n=this._hash.words,r=n[0],i=n[1],s=n[2],u=n[3],a=n[4],f=n[5],l=n[6],c=n[7],h=0;64>h;h++){if(16>h)p[h]=e[t+h]|0;else{var d=p[h-15],v=p[h-2];p[h]=((d<<25|d>>>7)^(d<<14|d>>>18)^d>>>3)+p[h-7]+((v<<15|v>>>17)^(v<<13|v>>>19)^v>>>10)+p[h-16]}d=c+((a<<26|a>>>6)^(a<<21|a>>>11)^(a<<7|a>>>25))+(a&f^~a&l)+o[h]+p[h];v=((r<<30|r>>>2)^(r<<19|r>>>13)^(r<<10|r>>>22))+(r&i^r&s^i&s);c=l;l=f;f=a;a=u+d|0;u=s;s=i;i=r;r=d+v|0}n[0]=n[0]+r|0;n[1]=n[1]+i|0;n[2]=n[2]+s|0;n[3]=n[3]+u|0;n[4]=n[4]+a|0;n[5]=n[5]+f|0;n[6]=n[6]+l|0;n[7]=n[7]+c|0},_doFinalize:function(){var t=this._data,n=t.words,r=8*this._nDataBytes,i=8*t.sigBytes;n[i>>>5]|=128<<24-i%32;n[(i+64>>>9<<4)+14]=e.floor(r/4294967296);n[(i+64>>>9<<4)+15]=r;t.sigBytes=4*n.length;this._process();return this._hash},clone:function(){var e=i.clone.call(this);e._hash=this._hash.clone();return e}});t.SHA256=i._createHelper(n);t.HmacSHA256=i._createHmacHelper(n)})(Math);
+</script>
+</head>
+
+<body>
+    <!-- Begin page content -->
+    <main role="main" class="container">
+        <h1 class="mt-5">Hello Miner!</h1>
+        <p class="lead">Mine an Allium based coin, such as TUX/GRLC, in your web browser.</p>
+        <p>Use <a href="../sticky-footer-navbar">the sticky footer with a fixed navbar</a> if need be, too.</p>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Pool URL</span>
+            </div>
+            <input type="text" class="form-control" value="pool.tuxtoke.life:3433" aria-label="Username" aria-describedby="basic-addon1" id="poolurl">
+        </div>
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Pool username</span>
+            </div>
+            <input type="text" class="form-control" value="TJGS1tWnsLaavtWEd77bP3EAfMMRE8wetW" aria-label="Username" aria-describedby="basic-addon1" id="username">
+        </div>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Pool password</span>
+            </div>
+            <input type="text" class="form-control" value="x" aria-label="Username" aria-describedby="basic-addon1" id="password">
+        </div>
+
+
+        <div class="input-group mb-3">
+        <a class="btn btn-primary" href="#" role="button" onclick="start()">Connect to pool</a>
+	</div>
+
+
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">Threads</span>
+            </div>
+            <input id="threadCount" min="0" max="64" type="number" class="form-control" placeholder="Number of threads" aria-label="Username" aria-describedby="basic-addon1">
+            <a class="btn btn-primary" href="#" role="button" onclick="changeNumberOfThreads();">Update number of threads</a>
+
+        </div>
+
+
+        <div class="input-group mb-3">
+
+        <a class="btn btn-primary" href="#" role="button" onclick="startMining();">Start Mining</a>
+	<span style="width: 2vw"></span>
+        <a class="btn btn-primary" href="#" role="button" onclick="stopWorkers();">Stop Mining</a>
+
+</div>
+
+
+                    <div class="form-group">
+                        <textarea id="log" rows="5" style="width: 100%; white-space: pre;overflow-wrap: normal;overflow-x: scroll;" class="form-control" wrap="soft" disabled></textarea>
+                    </div>
+
+        <div id="real-time-bar" class="epoch" style="height: 200px"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <span class="text-muted">Made with &#10084; from KorkyMonster#4304</span>
+        </div>
+    </footer>
+
+
+
+
+
+
+
+    <script>
+        var socket;
+var myReader = new FileReader();
+
+                var log = function log(msg){
+		    log_container = document.getElementById("log");
+                    log_container.append(moment().format('h:mm:ss : '));
+                    log_container.append(msg + '\n');
+                    if(log_container.length){
+                        log_container.scrollTop(log_container[0].scrollHeight - log_container.height());
+                    }
+                }
+
+
+
+        function convertUint8ArrayToBinaryString(u8Array) {
+            var i, len = u8Array.length,
+                b_str = "";
+            for (i = 0; i < len; i++) {
+                b_str += String.fromCharCode(u8Array[i]);
+            }
+            return b_str;
+        }
+
+        function hex2Buf(str) {
+            var r = new Uint8Array(str.length / 2);
+
+            for (var i = 0, x = str.length, k = 0; i < x; i += 2, k++) {
+                r[k] = parseInt(str.substr(i, 2), 16);
+            }
+
+            return r;
+        }
+
+        function doublesha(hexStr) {
+            var hexStrBuf = hex2Buf(hexStr);
+            var hexStrBin = convertUint8ArrayToBinaryString(hexStrBuf);
+            hexStrBin = CryptoJS.enc.Latin1.parse(hexStrBin);
+            var sha1 = CryptoJS.SHA256(hexStrBin);
+            sha1 = sha1.toString(CryptoJS.enc.Latin1);
+            sha1 = CryptoJS.enc.Latin1.parse(sha1);
+            var sha2 = CryptoJS.SHA256(sha1);
+            var dhash = sha2.toString();
+            return dhash;
+        }
+        const changeEndianness = (string) => {
+            const result = [];
+            let len = string.length - 2;
+            while (len >= 0) {
+                result.push(string.substr(len, 2));
+                len -= 2;
+            }
+            return result.join('');
+        }
+
+
+        const changePrevhashEndianness = (string) => {
+            pieces = string.match(/.{1,8}/g);
+            for (let i = 0; i < pieces.length; i++) {
+                pieces[i] = changeEndianness(pieces[i]);
+            }
+            pieces = pieces.join('');
+            return pieces;
+        }
+
+
+
+
+        var user;
+        var password;
+        var diff = 0;
+        var last_work;
+        var should_be_running = false;
+        var workers = [];
+        var worker_limit = window.navigator.hardwareConcurrency;
+        var worker_info = [];
+        var big_ntime;
+        var should_be_running = false;
+	var standby_workers = [];
+
+	for (i = 0; i < worker_limit; i++) {
+	    standby_workers.push(new Worker('worker.js'));
+	}
+        function processWork(message, is_forced_run) {
+            /* message = JSON.parse('{"params": ["b3ba", "7dcf1304b04e79024066cd9481aa464e2fe17966e19edf6f33970e1fe0b60277", "01000000010000000000000000000000000000000000000000000000000000000000000000ffffffff270362f401062f503253482f049b8f175308", "0d2f7374726174756d506f6f6c2f000000000100868591052100001976a91431482118f1d7504daf1c001cbfaf91ad580d176d88ac00000000", ["57351e8569cb9d036187a79fd1844fd930c1309efcd16c46af9bb9713b6ee734", "936ab9c33420f187acae660fcdb07ffdffa081273674f0f41e6ecc1347451d23"], "00000002", "1b44dfdb", "53178f9b", true], "id": null, "method": "mining.notify"}');
+            	console.log(message);	 */
+            last_work = message;
+            job_id = message.params[0];
+            prevhash = message.params[1];
+            coinb1 = message.params[2];
+            coinb2 = message.params[3];
+            merkle_branches = message.params[4];
+            version = message.params[5];
+            nbits = message.params[6];
+            ntime = message.params[7];
+            clean_jobs = message.params[8];
+            if ((clean_jobs || is_forced_run) && should_be_running) {
+                stopWorkers(true);
+                should_be_running = true;
+                first_run = false;
+                coinbase = coinb1 + extranonce_1 + extranonce_2 + coinb2;
+                //console.log(coinbase);
+                //console.log(doublesha(coinbase));
+                merkle_root = doublesha(coinbase);
+                for (let i = 0; i < merkle_branches.length; i++) {
+                    merkle_root = doublesha(merkle_root + merkle_branches[i]);
+                }
+                //console.log(merkle_root);
+                version = changeEndianness(version);
+                prevhash = changePrevhashEndianness(prevhash);
+                big_ntime = ntime;
+                ntime = changeEndianness(ntime);
+                nbits = changeEndianness(nbits);
+
+
+
+
+
+
+
+
+		for (i = 0; i < worker_limit; i++) {
+		    console.log("Worker was made");
+		    standby_workers[i].postMessage([version, prevhash, merkle_root, ntime, nbits, diff]);
+		    workers[i] = standby_workers[i];
+                    workers[i].onmessage = function(e) {
+                        if (e.data.submit) {
+                            socket.send('{"id": "mining.submit", "method": "mining.submit", "params": ["KorkyMonster.testing", "' + job_id + '", "00000000", "' + big_ntime + '", "' + (e.data.nonce).toString(16) + '"]}\n');
+                        } else if (e.data.reportHashrate) {
+                            e.srcElement.hashrate = (250 * ( 1000 / (e.timeStamp - e.srcElement.timestamp)));
+                            e.srcElement.timestamp = e.timeStamp;
+                        }
+                    }
+
+		}
+            if (!(standby_workers.length == 0)) {
+                while (standby_workers[0]) {
+                    standby_workers.shift();
+                }
+            }
+
+		for (i = 0; i < worker_limit; i++) {
+		   standby_workers.push(new Worker('worker.js'));
+		}
+		
+
+
+            } //
+        }
+
+        function processStratumData(message) {
+            message = message.replace(/(\r\n\t|\n|\r\t)/gm, "");
+            console.log(JSON.parse(message));
+            message = JSON.parse(message);
+            if (message.id == "mining.subscribe") {
+                extranonce_1 = message.result[1];
+                extranonce_2 = "00000000"; //We can decide any value we want here
+                socket.send('{"params": ["' + user + '", "' + password + '"], "id": "mining.authorize", "method": "mining.authorize"}\n');
+                console.log('SENT: ', '{"params": ["' + user + '", "' + password + '"], "id": "mining.authorize", "method": "mining.authorize"}\n');
+            }
+            if (message.id == "mining.authorize") {
+                if (message.result) {
+		    log("YAY! Successful authorization with pool!");
+                    console.log("YAY! Successful authorization with pool!");
+                }
+                if (!message.result) {
+		    log("OOF! Unsuccessful authorization with pool!");
+                    console.log("OOF! Unsuccessful authorization with pool!");
+                }
+            }
+            if (message.method == "mining.notify") {
+		log("New job, id#: " + message.params[0]);
+                processWork(message, false);
+            }
+            if (message.method == "mining.set_difficulty") {
+                diff = message.params[0];
+		log("Difficulty set to " + diff);
+            }
+        }
+
+        function keepAlive() {
+            setInterval(function() {
+                socket.send("");
+            }, 3000);
+
+        }
+
+
+
+myReader.addEventListener("loadend", function(e){
+                console.log('Message from server ', e.srcElement.result);
+                if (e.srcElement.result.search("}\n{") == -1) {
+                    processStratumData(e.srcElement.result);
+                } else { //Some pools have this weird thing where they send two messages in one message, so we splitting them
+                    processStratumData(e.srcElement.result.substring(0, e.srcElement.result.search("}\n{") + 1));
+                    processStratumData(e.srcElement.result.substring(e.srcElement.result.search("}\n{") + 1, e.srcElement.result.length));
+                }
+
+
+
+});
+
+
+
+        function start() {
+            user = document.getElementById("username").value;
+            password = document.getElementById("password").value;
+            socket = new WebSocket('ws://webmine.tuxtoke.life:8080/' + document.getElementById('poolurl').value);
+            socket.addEventListener('open', function(event) {
+                keepAlive();
+                socket.send('{"id": "mining.subscribe", "method": "mining.subscribe", "params": []}\n');
+            });
+
+
+
+            socket.addEventListener('message', function(event) {
+		myReader.readAsText(event.data);
+            });
+        }
+
+        function startMining() {
+            should_be_running = true;
+            processWork(last_work, true);
+	    log("Started mining");
+        }
+
+
+        function stopWorkers(should_not_log) {
+            should_be_running = false;
+            if (!(workers.length == 0)) {
+                for (var i = 0; i < workers.length; i++) {
+                    workers[i].terminate();
+                }
+                while (workers[0]) {
+                    workers.shift();
+                }
+            }
+	    if (!should_not_log) { log("Stopped mining"); }
+        }
+
+        function changeNumberOfThreads() {
+            new_threads = parseInt(document.getElementById("threadCount").value);
+            worker_limit = new_threads;
+            if (should_be_running == false) {
+                return;
+            }
+            if (workers.length < worker_limit) {
+                job_id = last_work.params[0];
+                prevhash = last_work.params[1];
+                coinb1 = last_work.params[2];
+                coinb2 = last_work.params[3];
+                merkle_branches = last_work.params[4];
+                version = last_work.params[5];
+                nbits = last_work.params[6];
+                ntime = last_work.params[7];
+                clean_jobs = last_work.params[8];
+                should_be_running = true;
+                first_run = false;
+                coinbase = coinb1 + extranonce_1 + extranonce_2 + coinb2;
+                //console.log(coinbase);
+                //console.log(doublesha(coinbase));
+                merkle_root = doublesha(coinbase);
+                for (let i = 0; i < merkle_branches.length; i++) {
+                    merkle_root = doublesha(merkle_root + merkle_branches[i]);
+                }
+                //console.log(merkle_root);
+                version = changeEndianness(version);
+                prevhash = changePrevhashEndianness(prevhash);
+                big_ntime = ntime;
+                ntime = changeEndianness(ntime);
+                nbits = changeEndianness(nbits);
+
+
+                while (workers.length < worker_limit) {
+
+                    workers.push(worker = new Worker('worker.js'));
+                    worker.onmessage = function(e) {
+                        if (e.data.submit) {
+                            socket.send('{"id": "mining.submit", "method": "mining.submit", "params": ["KorkyMonster.testing", "' + job_id + '", "00000000", "' + big_ntime + '", "' + (e.data.nonce).toString(16) + '"]}\n');
+                        } else if (e.data.reportHashrate) {
+                            e.srcElement.hashrate = (1000 / ((e.timeStamp - e.srcElement.timestamp) / 1000));
+                            e.srcElement.timestamp = e.timeStamp;
+                        } else {
+                            console.log(e);
+                            e.srcElement.postMessage([version, prevhash, merkle_root, ntime, nbits, diff]);
+                        }
+                    }
+                    console.log(workers);
+                }
+
+
+                while (standby_workers.length < worker_limit) {
+
+                    standby_workers.push(worker = new Worker('worker.js'));
+                    console.log(standby_workers);
+                }
+
+            }
+
+            if (workers.length > worker_limit) {
+
+
+                for (var i = 0; i < (workers.length - worker_limit); i++) {
+                    workers[i].terminate();
+                }
+                while (workers.length > worker_limit) {
+                    workers.shift();
+                }
+
+
+
+            }
+
+
+        }
+
+        (function() {
+
+            /*
+             * Class for generating real-time data for the area, line, and bar plots.
+             */
+            var RealTimeData = function(layers, ranges, bounds) {
+                this.layers = layers;
+                this.bounds = bounds || [];
+                this.ranges = ranges || [];
+                this.timestamp = ((new Date()).getTime() / 1000) | 0;
+            };
+
+            RealTimeData.prototype.rand = function(bound) {
+                bound = bound || 100;
+                return parseInt(Math.random() * bound) + 50;
+            };
+
+            RealTimeData.prototype.history = function(entries) {
+                if (typeof(entries) != 'number' || !entries) {
+                    entries = 60;
+                }
+
+                var history = [];
+                for (var k = 0; k < this.layers; k++) {
+                    var config = {
+                        values: []
+                    };
+                    if (this.ranges[k]) {
+                        config.range = this.ranges[k];
+                        console.log(config);
+                    }
+
+                    history.push(config);
+                }
+
+                for (var i = 0; i < entries; i++) {
+                    for (var j = 0; j < this.layers; j++) {
+                        history[j].values.push({
+                            time: this.timestamp,
+                            y: 0
+                        });
+                    }
+                    this.timestamp++;
+                }
+
+                return history;
+            };
+
+            RealTimeData.prototype.next = function() {
+                var entry = [];
+                for (var i = 0; i < this.layers; i++) {
+                    entry.push({
+                        time: this.timestamp,
+                        y: (Object.is(workers[i], undefined) ? 0 : workers[i].hashrate)
+                    }); //THIS IS WHAT TO CHANGE
+                }
+                this.timestamp++;
+                return entry;
+            }
+
+            window.RealTimeData = RealTimeData;
+
+
+
+        })();
+
+        $(function() {
+            var data = new RealTimeData(64);
+
+            var chart = $('#real-time-bar').epoch({
+                type: 'time.bar',
+                data: data.history(),
+                axes: ['left', 'bottom', 'right']
+            });
+
+            setInterval(function() {
+                chart.push(data.next());
+            }, 1000);
+            chart.push(data.next());
+        });
+    </script>
+
+</body>
+
+</html>

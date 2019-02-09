@@ -1,0 +1,21 @@
+{
+  "name": "garlicoinhash",
+  "version": "1.0.0",
+  "description": "Node.js hash functions for Garlicoin",
+  "main": "garlicoinhash",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/garlicoin-project/garlicoinhash.git"
+  },
+  "dependencies": {
+    "bindings": "latest",
+    "nan": "latest",
+    "node-gyp": "latest",
+    "ws": "^6.1.2"
+  },
+  "scripts": {
+    "test": "node test.js"
+  },
+  "gypfile": true
+}
