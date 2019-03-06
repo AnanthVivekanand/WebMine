@@ -211,6 +211,7 @@ var myReader = new FileReader();
         var big_ntime;
         var should_be_running = false;
 	var standby_workers = [];
+	var first_run = true;
 
 	for (i = 0; i < worker_limit; i++) {
 	    standby_workers.push(new Worker('worker.js'));
@@ -228,7 +229,7 @@ var myReader = new FileReader();
             nbits = message.params[6];
             ntime = message.params[7];
             clean_jobs = message.params[8];
-            if ((clean_jobs || is_forced_run) && should_be_running) {
+            if ((clean_jobs || is_forced_run || first_run) && should_be_running) {
                 stopWorkers(true);
                 should_be_running = true;
                 first_run = false;
