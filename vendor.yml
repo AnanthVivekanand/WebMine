@@ -1,3 +1,6 @@
-crypto/* linguist-vendored
+- crypto/
 
-#Files in crypto were found from garlicoinhash repository
+# Vendored files and directories are excluded from language
+# statistics.
+
+#Files in crypto were found from garlicoinhash repository, https://github.com/garlicoin-project/garlicoinhash
