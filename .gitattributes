@@ -1,1 +1,3 @@
 crypto/* linguist-vendored
+allium.js linguist-generated=false
+allium.wasm linguist-generated=false
