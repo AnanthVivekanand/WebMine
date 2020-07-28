@@ -1,6 +1,7 @@
-# WebGRLC
+# WebMine
 
-WebGRLC is a service that allows users to mine cryptocurrencies in the browser through an easy-to-use framework.
+WebMine is a service that allows users to mine cryptocurrencies in the browser through an easy-to-use framework. As of right now, it supports Allium coins, but
+other cryptocurrencies can easily be ported by swapping out the wasm binaries.
 
 ## Getting Started
 
@@ -56,7 +57,7 @@ You should start to see hashrate reports on your graph!
 
 ## Authors
 
-* **Ananth Vivekanand** - [KorkyMonster](https://github.com/KorkyMonster)
+* **Ananth Vivekanand** - [Github](https://github.com/AnanthVivekanand)
 
 ## License
 
